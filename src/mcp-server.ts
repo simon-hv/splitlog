@@ -12,22 +12,22 @@ const { version } = require("../package.json");
 
 function toolError(err: unknown): { isError: true; content: [{ type: "text"; text: string }] } {
   const message = err instanceof AuthError
-    ? "Not logged in. Run `coros login` in your terminal first."
+    ? "Not logged in. Run `splitlog login` in your terminal first."
     : err instanceof Error ? err.message : String(err);
   return { isError: true, content: [{ type: "text", text: message }] };
 }
 
 const server = new McpServer({
-  name: "coros",
+  name: "splitlog",
   version,
   description:
-    "Coros Training Hub — access running/cycling/swimming activity data and health metrics. " +
-    "Requires prior authentication via `coros login` in the terminal.",
+    "Coros Training Hub (unofficial) — access running/cycling/swimming activity data and health metrics. " +
+    "Requires prior authentication via `splitlog login` in the terminal.",
 });
 
 server.tool(
   "list_activities",
-  "List recent activities from Coros Training Hub. Returns activities with: labelId, name, sport, distanceKm, durationSeconds, avgPace, avgHr, ascentM, date. Use labelId from results to call get_activity.",
+  "List recent activities from the Training Hub. Returns activities with: labelId, name, sport, distanceKm, durationSeconds, avgPace, avgHr, ascentM, date. Use labelId from results to call get_activity.",
   { page: z.number().default(1), size: z.number().default(20) },
   async ({ page, size }) => {
     try {

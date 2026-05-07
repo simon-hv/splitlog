@@ -11,7 +11,7 @@ export class ApiError extends Error { name = "ApiError" as const; }
 
 function requireToken(): string {
   const token = getToken();
-  if (!token) throw new AuthError("Not logged in. Run: coros login");
+  if (!token) throw new AuthError("Not logged in. Run: splitlog login");
   return token;
 }
 

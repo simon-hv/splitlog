@@ -1,35 +1,35 @@
 {
-  "name": "coros-cli",
-  "version": "0.1.4",
-  "description": "CLI and MCP server for Coros Training Hub — access your activity data and health metrics",
+  "name": "@ibarker34/splitlog",
+  "version": "0.1.0",
+  "description": "Unofficial CLI and MCP server for Coros Training Hub — access activity data and health metrics.",
   "type": "module",
   "license": "MIT",
   "author": "simon-hv",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simon-hv/coros-cli.git"
+    "url": "git+https://github.com/simon-hv/splitlog.git"
   },
-  "homepage": "https://github.com/simon-hv/coros-cli#readme",
-  "bugs": "https://github.com/simon-hv/coros-cli/issues",
+  "homepage": "https://github.com/simon-hv/splitlog#readme",
+  "bugs": "https://github.com/simon-hv/splitlog/issues",
   "engines": {
     "node": ">=18"
   },
   "keywords": [
+    "splitlog",
     "coros",
+    "unofficial",
     "running",
     "training",
     "mcp",
     "cli",
-    "garmin",
     "fitness",
     "health",
     "heart-rate",
     "activities"
   ],
   "bin": {
-    "coros": "dist/cli.js",
-    "coros-cli": "dist/cli.js",
-    "coros-mcp": "dist/mcp-server.js"
+    "splitlog": "dist/cli.js",
+    "splitlog-mcp": "dist/mcp-server.js"
   },
   "scripts": {
     "build": "tsc",

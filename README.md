@@ -1,19 +1,25 @@
-# coros-cli
+# splitlog
 
-CLI and MCP server for [Coros Training Hub](https://t.coros.com) — extract your activity data and health metrics from the command line. Designed for both humans and AI agents (Claude Desktop, Claude Code, scripts).
+[![npm version](https://img.shields.io/npm/v/@ibarker34/splitlog.svg)](https://www.npmjs.com/package/@ibarker34/splitlog)
+[![npm downloads](https://img.shields.io/npm/dm/@ibarker34/splitlog.svg)](https://www.npmjs.com/package/@ibarker34/splitlog)
+[![license](https://img.shields.io/npm/l/@ibarker34/splitlog.svg)](./LICENSE)
+
+Unofficial CLI and MCP server for [Coros Training Hub](https://t.coros.com) — extract your activity data and health metrics from the command line. Designed for both humans and AI agents (Claude Desktop, Claude Code, scripts).
 
 All commands produce rich terminal output for humans and structured JSON (`--json`) for agents and automation.
+
+> Not affiliated with, authorized, or endorsed by COROS. This tool accesses your own data using your own credentials.
 
 ## Install
 
 ```sh
-npm install -g coros-cli
+npm install -g @ibarker34/splitlog
 ```
 
 Or run directly with npx:
 
 ```sh
-npx -y coros-cli activities
+npx -y @ibarker34/splitlog activities
 ```
 
 ## Setup
@@ -21,17 +27,17 @@ npx -y coros-cli activities
 Authenticate with your Coros account:
 
 ```sh
-coros login
+splitlog login
 ```
 
-This stores your credentials in `~/.config/coros-cli/config.json`. Sessions are refreshed automatically — you only need to login once. EU accounts are auto-detected.
+This stores your credentials in `~/.config/splitlog/config.json`. Sessions are refreshed automatically — you only need to login once. EU accounts are auto-detected.
 
 ## Usage
 
 ### List activities
 
 ```
-$ coros activities
+$ splitlog activities
                              Activities (191 total)
 ┌────────────┬────────────────┬───────────┬──────────┬──────────┬────────┬───────────┐
 │ Date       │ Name           │ Type      │ Distance │ Duration │ Avg HR │ Elevation │
@@ -46,7 +52,7 @@ Options: `--page`, `--size`, `--json`
 ### Activity detail
 
 ```
-$ coros activity 475835095599579138
+$ splitlog activity 475835095599579138
 ╭──────────────────────────── Morning Run ─────────────────────────────╮
 │ Sport:          Run                                                   │
 │ Distance:       6.58 km                                               │
@@ -59,12 +65,12 @@ $ coros activity 475835095599579138
 ╰───────────────────────────────────────────────────────────────────────╯
 ```
 
-Includes laps, HR zones, and pace zones. The label ID comes from `coros activities`.
+Includes laps, HR zones, and pace zones. The label ID comes from `splitlog activities`.
 
 ### Health dashboard
 
 ```
-$ coros health
+$ splitlog health
  Running Level: 75.0
 ┌───────────┬───────┐
 │ Category  │ Score │
@@ -98,49 +104,49 @@ Also shows: resting HR, threshold HR/pace, recovery %, night HRV, weekly distanc
 All commands support `--json` for raw API data — useful for scripting or AI agents:
 
 ```sh
-coros activities --json | jq '.data.dataList[0].name'
-coros health --json | jq '.dashboard.data.summaryInfo.staminaLevel'
+splitlog activities --json | jq '.data.dataList[0].name'
+splitlog health --json | jq '.dashboard.data.summaryInfo.staminaLevel'
 ```
 
 ## MCP Server (Claude Desktop)
 
-coros-cli includes a built-in [MCP](https://modelcontextprotocol.io/) server, so Claude Desktop (or any MCP client) can access your Coros data directly.
+splitlog includes a built-in [MCP](https://modelcontextprotocol.io/) server, so Claude Desktop (or any MCP client) can access your training data directly.
 
 ### Setup
 
-1. Run `coros login` in your terminal first
+1. Run `splitlog login` in your terminal first
 2. Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
 ```json
 {
   "mcpServers": {
-    "coros": {
+    "splitlog": {
       "command": "npx",
-      "args": ["-y", "coros-cli", "mcp"]
+      "args": ["-y", "@ibarker34/splitlog", "mcp"]
     }
   }
 }
 ```
 
-3. Restart Claude Desktop — the Coros tools will appear automatically
+3. Restart Claude Desktop — the tools will appear automatically
 
 ### Available tools
 
-| Tool | Description |
-|------|-------------|
-| `list_activities` | List recent activities (paginated) |
-| `get_activity` | Activity detail — full by default (laps, HR timeline, zones), or `detailed=false` for lightweight summary (multi-run analysis) |
-| `get_health` | Health dashboard (running level, training status, race predictor, HRV) |
+| Tool              | Description                                                                                                                    |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `list_activities` | List recent activities (paginated)                                                                                             |
+| `get_activity`    | Activity detail — full by default (laps, HR timeline, zones), or `detailed=false` for lightweight summary (multi-run analysis) |
+| `get_health`      | Health dashboard (running level, training status, race predictor, HRV)                                                         |
 
 ## How authentication works
 
-When you run `coros login`:
+When you run `splitlog login`:
 
 1. Your password is hashed (MD5) locally before leaving your machine
-2. The hash is sent to Coros's login endpoint to obtain a session token
-3. The token and password hash are saved in `~/.config/coros-cli/config.json`
+2. The hash is sent to the login endpoint to obtain a session token
+3. The token and password hash are saved in `~/.config/splitlog/config.json`
 
-Your plain-text password is **never stored**. When the session token expires, coros-cli automatically re-authenticates using the stored hash — no manual re-login needed. You can inspect or delete the config file at any time.
+Your plain-text password is **never stored**. When the session token expires, splitlog automatically re-authenticates using the stored hash — no manual re-login needed. You can inspect or delete the config file at any time.
 
 ## Disclaimer
 

@@ -53,7 +53,7 @@ function prompt(question: string, hidden = false): Promise<string> {
   });
 }
 
-program.name("coros").description("Coros Training Hub CLI");
+program.name("splitlog").description("Unofficial CLI for Coros Training Hub");
 
 program
   .command("login")

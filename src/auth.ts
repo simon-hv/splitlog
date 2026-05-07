@@ -52,7 +52,7 @@ export async function login(email: string, password: string): Promise<Config> {
 export async function relogin(): Promise<string> {
   const config = loadConfig();
   if (!config.email || !config.pwd_hash) {
-    throw new Error("No stored credentials. Run: coros login");
+    throw new Error("No stored credentials. Run: splitlog login");
   }
 
   const resp = await fetch(`${API_BASES.global}/account/login`, {
@@ -65,7 +65,7 @@ export async function relogin(): Promise<string> {
   const data = await resp.json();
 
   if (data.result !== RESULT_SUCCESS && data.apiCode !== RESULT_SUCCESS) {
-    throw new Error("Auto-relogin failed. Run: coros login");
+    throw new Error("Auto-relogin failed. Run: splitlog login");
   }
 
   const accessToken: string = data.data.accessToken;
